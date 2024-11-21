@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Enseignant -->
+        <TextView
+            android:id="@+id/text_enseignant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enseignant: M. Dupont"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+
+        <!-- Classe -->
+        <TextView
+            android:id="@+id/text_classe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Classe: XYZ"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date: 01/01/2024"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Heure -->
+        <TextView
+            android:id="@+id/text_heure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heure: 10:00"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Salle -->
+        <TextView
+            android:id="@+id/text_salle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salle: 101"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

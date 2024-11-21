@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:id="@+id/main"
+    tools:context=".Agent.AjouterAbsence">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter une Absence"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"/>
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date de l'absence"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/date_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="JJ/MM/AAAA"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@id/date_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Heure -->
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heure de l'absence"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/date_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/time_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="HH:MM"
+        android:inputType="time"
+        app:layout_constraintTop_toBottomOf="@id/time_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+    <!-- Enseignant Concerné -->
+    <TextView
+        android:id="@+id/enseignant_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enseignant Concerné"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/agent_id_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/enseignant_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nom de l'enseignant"
+        app:layout_constraintTop_toBottomOf="@id/enseignant_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Salle -->
+    <TextView
+        android:id="@+id/salle_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salle"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/time_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/salle_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ex : Salle A1"
+        app:layout_constraintTop_toBottomOf="@id/salle_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Classe -->
+    <TextView
+        android:id="@+id/classe_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Classe"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/salle_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/classe_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Ex : 2A"
+        app:layout_constraintTop_toBottomOf="@id/classe_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- ID de l'agent -->
+    <TextView
+        android:id="@+id/agent_id_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID de l'agent"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/classe_input"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/agent_id_input"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Entrez l'ID de l'agent"
+        android:inputType="number"
+        app:layout_constraintTop_toBottomOf="@id/agent_id_label"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Bouton Ajouter l'absence -->
+    <Button
+        android:id="@+id/btn_add_absence"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:backgroundTint="@color/custom_blue"
+        android:padding="12dp"
+        android:text="Ajouter l'absence"
+        android:textColor="@android:color/white"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/agent_id_input" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "462087185951",
+    "project_id": "absentiessect",
+    "storage_bucket": "absentiessect.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462087185951:android:88ebe8b027126ed30bd72a",
+        "android_client_info": {
+          "package_name": "com.example.absentiessect1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVc0Ze1cPRqzTdwz00cBNRKVYQw1WXsuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462087185951:android:bcf0e850f84ca7280bd72a",
+        "android_client_info": {
+          "package_name": "com.example.essect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVc0Ze1cPRqzTdwz00cBNRKVYQw1WXsuc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
