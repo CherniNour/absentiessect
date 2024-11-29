@@ -13,10 +13,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.absentiessect1.R;
 
+
 public class DashboardAgent extends AppCompatActivity {
 
     private CardView ajouterAbsenceCardView;
     private CardView listeAbsencesCardView;
+    private CardView gestionEmploiCardView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,5 +57,16 @@ public class DashboardAgent extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        gestionEmploiCardView = findViewById(R.id.card_gestion_emploi);
+        gestionEmploiCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Naviguer vers l'activité GestionEmploi
+                Intent intent = new Intent(DashboardAgent.this, GestionEmploi.class);
+                startActivity(intent);
+            }
+        });
+
     }
+
 }

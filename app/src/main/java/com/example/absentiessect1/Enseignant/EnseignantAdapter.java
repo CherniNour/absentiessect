@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.absentiessect1.EnseignantAbsenceItem;
+import com.example.absentiessect1.Models.EnseignantAbsenceItem;
 import com.example.absentiessect1.R;
 
 import java.util.List;

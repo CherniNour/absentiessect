@@ -8,15 +8,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.absentiessect1.Absence;
+import com.example.absentiessect1.Models.Absence;
 import com.example.absentiessect1.Enseignant.EnseignantAdapter;
-import com.example.absentiessect1.EnseignantAbsenceItem;
+import com.example.absentiessect1.Models.EnseignantAbsenceItem;
 import com.example.absentiessect1.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,26 +89,33 @@ public class ListeAbsencesAgent extends AppCompatActivity {
     }
 
     private void showAbsenceDetails(String enseignantNom, Absence absence) {
-        // Fetch more details about the selected absence from Firestore
+        // Fetch all absences for the selected professor from Firestore
         db.collection("Absences")
                 .whereEqualTo("Enseignant", enseignantNom)  // Filter by the professor's name
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {
-                        DocumentSnapshot document = queryDocumentSnapshots.getDocuments().get(0);
+                        // Create a list to hold all absences for the professor
+                        List<Absence> absences = new ArrayList<>();
 
-                        // Populate the Absence object with data from Firestore
-                        Absence selectedAbsence = new Absence();
-                        selectedAbsence.setEnseignant(document.getString("Enseignant"));
-                        selectedAbsence.setClasse(document.getString("Classe"));
-                        selectedAbsence.setDate(document.getString("Date"));
-                        selectedAbsence.setHeure(document.getString("Heure"));
-                        selectedAbsence.setSalle(document.getString("Salle"));
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            // Populate the Absence object with data from Firestore
+                            Absence selectedAbsence = new Absence();
+                            selectedAbsence.setEnseignant(document.getString("Enseignant"));
+                            selectedAbsence.setClasse(document.getString("Classe"));
+                            selectedAbsence.setDate(document.getString("Date"));
+                            selectedAbsence.setHeure(document.getString("Heure"));
+                            selectedAbsence.setSalle(document.getString("Salle"));
 
-                        // Pass the Absence object to the next activity
+                            // Add the absence to the list
+                            absences.add(selectedAbsence);
+                        }
+
+                        // Pass the list of Absence objects to the next activity
                         Intent intent = new Intent(ListeAbsencesAgent.this, AbsenceDetailsActivity.class);
-                        intent.putExtra("absenceDetails", selectedAbsence);  // Pass the Absence object
+                        intent.putExtra("absenceDetailsList", new ArrayList<>(absences));  // Pass as Serializable
                         startActivity(intent);
+
                     } else {
                         Toast.makeText(ListeAbsencesAgent.this, "Aucune absence trouvée pour cet enseignant.", Toast.LENGTH_SHORT).show();
                     }
@@ -121,4 +126,5 @@ public class ListeAbsencesAgent extends AppCompatActivity {
     }
 
 
-}
+
+}  

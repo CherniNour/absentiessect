@@ -1,0 +1,44 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Agent.GestionEmploi">
+
+    <!-- Titre de la page -->
+    <TextView
+        android:id="@+id/tv_titre_gestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gestion des Emplois du Temps"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center" />
+
+    <!-- Bouton pour importer un fichier Excel -->
+    <Button
+        android:id="@+id/btn_importer_excel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Importer un fichier Excel"
+        app:layout_constraintTop_toBottomOf="@id/tv_titre_gestion"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="40dp" />
+
+    <!-- Bouton pour importer un fichier PDF -->
+    <Button
+        android:id="@+id/btn_importer_pdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Importer un fichier PDF"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_importer_excel" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

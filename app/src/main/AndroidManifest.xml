@@ -13,6 +13,12 @@
         android:theme="@style/Theme.AbsentiEssect1"
         tools:targetApi="31">
         <activity
+            android:name=".Agent.ImporterFichier"
+            android:exported="false" />
+        <activity
+            android:name=".Agent.GestionEmploi"
+            android:exported="false" />
+        <activity
             android:name=".Agent.AbsenceDetailsActivity"
             android:exported="false" />
         <activity
@@ -57,6 +63,8 @@
         <activity
             android:name=".Login"
             android:exported="true" />
+
+
     </application>
 
 </manifest>

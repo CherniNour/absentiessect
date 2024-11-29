@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.absentiessect1.Absence;
+import com.example.absentiessect1.Models.Absence;
 import com.example.absentiessect1.R;
 
 public class AbsenceDetailsActivity extends AppCompatActivity {

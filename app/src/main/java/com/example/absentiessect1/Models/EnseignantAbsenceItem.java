@@ -1,4 +1,4 @@
-package com.example.absentiessect1;
+package com.example.absentiessect1.Models;
 
 public class EnseignantAbsenceItem {
     private String enseignantNom;
