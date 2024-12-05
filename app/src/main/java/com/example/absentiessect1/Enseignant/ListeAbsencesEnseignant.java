@@ -1,6 +1,9 @@
 package com.example.absentiessect1.Enseignant;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -37,20 +40,29 @@ public class ListeAbsencesEnseignant extends AppCompatActivity {
         // Initialize Firestore
         db = FirebaseFirestore.getInstance();
 
-        // Fetch absences data from Firestore
-        db.collection("absences")
-                .whereEqualTo("IDagent", "teacherID")  // Replace "teacherID" with the actual teacher's ID
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (queryDocumentSnapshots != null) {
-                        List<Absence> absences = queryDocumentSnapshots.toObjects(Absence.class);
-                        absencesList.clear();
-                        absencesList.addAll(absences);
-                        absenceAdapter.notifyDataSetChanged();
-                    }
-                })
-                .addOnFailureListener(e -> Toast.makeText(ListeAbsencesEnseignant.this, "Failed to load data", Toast.LENGTH_SHORT).show());
+        // Retrieve the teacher's name from SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPref", Context.MODE_PRIVATE);
+        String teacherName = sharedPreferences.getString("name", null);
 
+        if (teacherName != null) {
+            db.collection("absences")
+                    .whereEqualTo("email", teacherName) // Match `teacherName` with `Enseignant`
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                            List<Absence> absences = queryDocumentSnapshots.toObjects(Absence.class);
+                            absencesList.clear();
+                            absencesList.addAll(absences);
+                            absenceAdapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("ListeAbsences", "No absences found for teacher: " + teacherName);
+                            Toast.makeText(this, "No absences found for " + teacherName, Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("ListeAbsences", "Error fetching absences", e);
+                        Toast.makeText(this, "Failed to load data", Toast.LENGTH_SHORT).show();
+                    });
 
-    }
-}
+        }
+}}
