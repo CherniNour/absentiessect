@@ -44,6 +44,14 @@
         android:gravity="center" />
 
     <!-- Bouton pour traiter le fichier -->
+    <EditText
+        android:id="@+id/et_salle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Entrer la salle"
+        android:inputType="text" />
+
+
     <Button
         android:id="@+id/btn_traiter_fichier"
         android:layout_width="wrap_content"

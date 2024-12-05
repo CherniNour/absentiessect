@@ -113,7 +113,7 @@ public class ListeAbsencesAgent extends AppCompatActivity {
 
                         // Pass the list of Absence objects to the next activity
                         Intent intent = new Intent(ListeAbsencesAgent.this, AbsenceDetailsActivity.class);
-                        intent.putExtra("absenceDetailsList", new ArrayList<>(absences));  // Pass as Serializable
+                        intent.putExtra("absenceDetailsList", (ArrayList<Absence>) absences);  // Pass as Serializable
                         startActivity(intent);
 
                     } else {
@@ -124,6 +124,7 @@ public class ListeAbsencesAgent extends AppCompatActivity {
                     Toast.makeText(ListeAbsencesAgent.this, "Erreur de chargement des détails de l'absence.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
 
 

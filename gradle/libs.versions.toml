@@ -9,6 +9,11 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 firebase-bom = "33.5.1"
 googleGmsGoogleServices = "4.4.2"
+poi = "5.2.3"
+poi-ooxml = "5.2.3"
+poi-schemas = "5.2.3"
+
+
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -20,7 +25,9 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 firebase-store = { group = "com.google.firebase", name = "firebase-firestore" }
-
+poi = { module = "org.apache.poi:poi", version.ref = "poi" }
+poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi-ooxml" }
+poi-schemas = { module = "org.apache.poi:poi-ooxml-schemas", version.ref = "poi-schemas" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 

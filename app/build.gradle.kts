@@ -42,6 +42,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.poi) // For Apache POI
 
     // Add Firebase libraries without specifying versions
     implementation(libs.firebase.auth)
