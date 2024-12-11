@@ -8,7 +8,7 @@ public class Absence implements Serializable {
     private String Heure;
     private String IDagent;
     private String Salle;
-    private String enseignant;
+    private String Enseignant;
 
 
     // Default constructor required for Firestore's toObjects() method
@@ -56,11 +56,11 @@ public class Absence implements Serializable {
         this.Salle = salle;
     }
     public String getEnseignantNom() {
-        return enseignant;
+        return Enseignant;
     }
 
     public void setEnseignant(String enseignant) {
-        this.enseignant = enseignant;
+        this.Enseignant = enseignant;
     }
 
 }

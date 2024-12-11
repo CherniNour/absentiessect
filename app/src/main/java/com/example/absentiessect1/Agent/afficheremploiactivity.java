@@ -2,7 +2,7 @@ package com.example.absentiessect1.Agent;
 
 import android.os.Bundle;
 import android.util.Base64;
-import android.widget.TextView;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,20 +11,17 @@ import com.example.absentiessect1.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import org.apache.poi.ss.usermodel.*;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 public class afficheremploiactivity extends AppCompatActivity {
-
-    private TextView tvEmploi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afficheremploiactivity);
-
-        tvEmploi = findViewById(R.id.tv_emploi);
 
         // Retrieve salle from intent
         String salle = getIntent().getStringExtra("SALLE");
@@ -33,7 +30,7 @@ public class afficheremploiactivity extends AppCompatActivity {
             // Fetch and display emploi from Firestore for the selected salle
             fetchEmploiForSalle(salle);
         } else {
-            tvEmploi.setText("Aucune salle sélectionnée.");
+            Toast.makeText(this, "Aucune salle sélectionnée.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -49,22 +46,19 @@ public class afficheremploiactivity extends AppCompatActivity {
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.isEmpty()) {
-                        tvEmploi.setText("Aucun emploi du temps trouvé pour cette salle.");
+                        Toast.makeText(afficheremploiactivity.this, "Aucun emploi du temps trouvé pour cette salle.", Toast.LENGTH_SHORT).show();
                     } else {
-                        StringBuilder emploiDetails = new StringBuilder();
                         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                             // Get the base64 string of the file (or any other data from Firestore)
                             String emploiBase64 = documentSnapshot.getString("fileBase64");
                             if (emploiBase64 != null) {
                                 byte[] decodedBytes = Base64.decode(emploiBase64, Base64.DEFAULT);
-                                InputStream inputStream = new ByteArrayInputStream(decodedBytes);
+                                ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);
 
-                                // Read Excel content and set it to TextView
-                               // String excelContent = readExcelFile(inputStream);
-                               // emploiDetails.append(excelContent).append("\n");
+                                // Log the content or perform any other operation
+                                logExcelContent(inputStream);
                             }
                         }
-                        tvEmploi.setText(emploiDetails.toString());
                     }
                 })
                 .addOnFailureListener(e -> {
@@ -73,41 +67,27 @@ public class afficheremploiactivity extends AppCompatActivity {
     }
 
     /**
-     * Method to read the Excel file and convert it to string.
+     * Method to read the Excel file and log its content for debugging.
      */
-   /* private String readExcelFile(InputStream inputStream) {
-        StringBuilder stringBuilder = new StringBuilder();
-
+    private void logExcelContent(ByteArrayInputStream inputStream) {
         try {
             // Read the Excel file with Apache POI
-            org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook(inputStream);
-            org.apache.poi.ss.usermodel.Sheet sheet = workbook.getSheetAt(0);  // Read the first sheet
+            Workbook workbook = WorkbookFactory.create(inputStream);
+            Sheet sheet = workbook.getSheetAt(0);  // Read the first sheet
 
-            for (org.apache.poi.ss.usermodel.Row row : sheet) {
-                for (org.apache.poi.ss.usermodel.Cell cell : row) {
-                    // Handle different cell types (String, Numeric, etc.)
-                    switch (cell.getCellType()) {
-                        case STRING:
-                            stringBuilder.append(cell.getStringCellValue()).append("\t");
-                            break;
-                        case NUMERIC:
-                            stringBuilder.append(cell.getNumericCellValue()).append("\t");
-                            break;
-                        case BOOLEAN:
-                            stringBuilder.append(cell.getBooleanCellValue()).append("\t");
-                            break;
-                        default:
-                            stringBuilder.append("N/A").append("\t");
-                            break;
-                    }
+            // Iterate over the rows and cells, logging their content
+            for (Row row : sheet) {
+                StringBuilder rowContent = new StringBuilder();
+                for (Cell cell : row) {
+                    rowContent.append(cell.toString()).append(" | ");
                 }
-                stringBuilder.append("\n");
+                Log.d("afficheremploiactivity", rowContent.toString());
             }
+
             workbook.close();
         } catch (IOException e) {
-            e.printStackTrace();
-            return "Erreur lors de la lecture du fichier Excel.";
+            Log.e("afficheremploiactivity", "Error reading Excel file", e);
+            Toast.makeText(this, "Erreur lors de la lecture du fichier Excel.", Toast.LENGTH_SHORT).show();
         }
-        return stringBuilder.toString();
-    }*/
+    }
 }

@@ -1,0 +1,71 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
+    android:padding="16dp"
+    tools:context=".Enseignant.ReclamationEnseignant"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Affichage de l'ID utilisateur connecté -->
+        <TextView
+            android:id="@+id/tv_user_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ID Utilisateur : "
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Champ pour entrer le sujet -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sujet"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/et_subject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Entrez le sujet"
+            android:inputType="text"
+            android:padding="12dp"
+            android:background="?android:attr/editTextBackground" />
+
+        <!-- Champ pour entrer le message -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Message"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:hint="Décrivez votre réclamation"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:padding="12dp"
+            android:background="?android:attr/editTextBackground" />
+
+        <!-- Bouton pour envoyer la réclamation -->
+        <Button
+            android:id="@+id/btn_send_reclamation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/custom_blue"
+            android:text="Envoyer"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Title of the Dashboard -->
+
+    <!-- Stats Section -->
+    <TextView
+        android:id="@+id/dashboardTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="16dp"
+        android:text="Absence Management Dashboard"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.28" />
+
+    <LinearLayout
+        android:id="@+id/attendanceStatsSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/dashboardTitle">
+
+        <TextView
+            android:id="@+id/absenceCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences: 0"
+            android:textSize="18sp"
+            android:layout_marginEnd="32dp"/>
+
+        <TextView
+            android:id="@+id/claimsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Claims: 0"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <!-- Teacher Absence Management Section -->
+    <LinearLayout
+        android:id="@+id/teacherAbsenceManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/attendanceStatsSection">
+
+        <TextView
+            android:id="@+id/teacherAbsenceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences by Teacher"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/teacherAbsenceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <!-- Class Absence Management Section -->
+    <LinearLayout
+        android:id="@+id/classAbsenceManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/teacherAbsenceManagement">
+
+        <TextView
+            android:id="@+id/classAbsenceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences by Class"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/classAbsenceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <!-- Period Absence Management Section -->
+    <LinearLayout
+        android:id="@+id/periodAbsenceManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/classAbsenceManagement">
+
+        <TextView
+            android:id="@+id/periodAbsenceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Absences by Period"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/periodAbsenceList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+    <!-- Claims Section -->
+    <LinearLayout
+        android:id="@+id/claimsManagement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/periodAbsenceManagement">
+
+        <TextView
+            android:id="@+id/claimsManagementTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage Claims"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/claimsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

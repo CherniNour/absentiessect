@@ -31,12 +31,12 @@ public class DashboardEnseignant extends AppCompatActivity {
         /*cardNotifications.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardEnseignant.this, NotificationsEnseignant.class);
             startActivity(intent);
-        });
+        });*/
 
         cardAddReclamation.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardEnseignant.this, ReclamationEnseignant.class);
             startActivity(intent);
-        });*/
+        });
 
        /* cardLogout.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardEnseignant.this, LogoutActivity.class);
