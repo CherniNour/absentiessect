@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">AbsentiEssect1</string>
     <string name="logo_description">Logo of the application</string>
+    <string name="total_claims">Total Claims: </string>
+    <string name="pie_chart_description">Claims Breakdown</string>
+    <string name="bar_chart_teacher_description">Absences by Teacher</string>
+    <string name="line_chart_period_description">Absences by Period</string>
+    <string name="horizontal_bar_chart_class_description">Absences by Class</string>
+    <string-array name="period_options">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
+    </string-array>
+
 </resources>

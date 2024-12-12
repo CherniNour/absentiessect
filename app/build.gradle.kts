@@ -33,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -48,5 +47,9 @@ dependencies {
     // Add Firebase libraries without specifying versions
     implementation(libs.firebase.auth)
     implementation(libs.firebase.store)
+
+    // Add MPAndroidChart dependency
+    implementation(libs.mpandroidchart)  // This will now reference the MPAndroidChart library
+
 
 }

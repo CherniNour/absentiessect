@@ -13,6 +13,7 @@ poi = "5.2.3"
 poi-ooxml = "5.2.3"
 poi-schemas = "5.2.3"
 firebaseDatabase = "21.0.0"
+mpandroidchartVersion = "3.1.0"
 
 
 [libraries]
@@ -30,6 +31,8 @@ poi = { module = "org.apache.poi:poi", version.ref = "poi" }
 poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi-ooxml" }
 poi-schemas = { module = "org.apache.poi:poi-ooxml-schemas", version.ref = "poi-schemas" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version.ref = "mpandroidchartVersion" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 
