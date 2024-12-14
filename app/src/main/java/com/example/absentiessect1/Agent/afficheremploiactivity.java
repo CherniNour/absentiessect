@@ -1,93 +1,141 @@
 package com.example.absentiessect1.Agent;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Base64;
-import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.absentiessect1.R;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 public class afficheremploiactivity extends AppCompatActivity {
+
+    private FirebaseFirestore firestore;
+    private TextView excelContentTextView; // TextView to display the content
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_afficheremploiactivity);
 
-        // Retrieve salle from intent
-        String salle = getIntent().getStringExtra("SALLE");
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance();
 
-        if (salle != null) {
-            // Fetch and display emploi from Firestore for the selected salle
-            fetchEmploiForSalle(salle);
+        // Initialize UI elements
+        excelContentTextView = findViewById(R.id.excelContentTextView);
+
+        // Get selected salle from intent
+        String selectedSalle = getIntent().getStringExtra("SALLE");
+        if (selectedSalle != null) {
+            afficherEmploiDepuisFirestore(selectedSalle);
         } else {
-            Toast.makeText(this, "Aucune salle sélectionnée.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Aucune salle sélectionnée", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Fetch emploi du temps for the selected salle from Firestore.
-     */
-    private void fetchEmploiForSalle(String salle) {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-        // Query Firestore for the data related to the salle
+    private void afficherEmploiDepuisFirestore(String salle) {
         firestore.collection("emploi")
                 .whereEqualTo("salle", salle)
                 .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if (queryDocumentSnapshots.isEmpty()) {
-                        Toast.makeText(afficheremploiactivity.this, "Aucun emploi du temps trouvé pour cette salle.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            // Get the base64 string of the file (or any other data from Firestore)
-                            String emploiBase64 = documentSnapshot.getString("fileBase64");
-                            if (emploiBase64 != null) {
-                                byte[] decodedBytes = Base64.decode(emploiBase64, Base64.DEFAULT);
-                                ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);
-
-                                // Log the content or perform any other operation
-                                logExcelContent(inputStream);
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        if (!task.getResult().isEmpty()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String base64File = document.getString("fileBase64");
+                                if (base64File != null) {
+                                    displayExcelContent(base64File);
+                                    break; // Display the first matching document
+                                }
                             }
+                        } else {
+                            Toast.makeText(this, "Aucun emploi du temps trouvé pour cette salle", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        Toast.makeText(this, "Erreur lors du chargement de l'emploi du temps", Toast.LENGTH_SHORT).show();
                     }
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(afficheremploiactivity.this, "Erreur lors de la récupération de l'emploi", Toast.LENGTH_SHORT).show();
                 });
     }
 
-    /**
-     * Method to read the Excel file and log its content for debugging.
-     */
-    private void logExcelContent(ByteArrayInputStream inputStream) {
+    private void displayExcelContent(String base64File) {
         try {
-            // Read the Excel file with Apache POI
-            Workbook workbook = WorkbookFactory.create(inputStream);
-            Sheet sheet = workbook.getSheetAt(0);  // Read the first sheet
+            // Decode Base64 file
+            byte[] fileBytes = Base64.decode(base64File, Base64.DEFAULT);
 
-            // Iterate over the rows and cells, logging their content
-            for (Row row : sheet) {
-                StringBuilder rowContent = new StringBuilder();
-                for (Cell cell : row) {
-                    rowContent.append(cell.toString()).append(" | ");
-                }
-                Log.d("afficheremploiactivity", rowContent.toString());
+            // Save the decoded bytes to an Excel file
+            File excelFile = saveExcelToStorage(fileBytes);
+
+            // Display content from Excel file
+            if (excelFile != null) {
+                readExcelContent(excelFile);
+            } else {
+                Toast.makeText(this, "Erreur lors de l'enregistrement du fichier Excel", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur lors du décodage du fichier Excel", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private File saveExcelToStorage(byte[] fileBytes) {
+        try {
+            // Create a directory in external storage
+            File directory = new File(getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "ExcelFiles");
+            if (!directory.exists()) {
+                directory.mkdirs();
             }
 
-            workbook.close();
+            // Create an Excel file in the directory
+            File excelFile = new File(directory, "emploi_du_temps.xlsx");
+            FileOutputStream fos = new FileOutputStream(excelFile);
+            fos.write(fileBytes);
+            fos.close();
+
+            return excelFile;
         } catch (IOException e) {
-            Log.e("afficheremploiactivity", "Error reading Excel file", e);
-            Toast.makeText(this, "Erreur lors de la lecture du fichier Excel.", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private void readExcelContent(File excelFile) {
+        try {
+            // Open the Excel file
+            FileInputStream fis = new FileInputStream(excelFile);
+            Workbook workbook = new XSSFWorkbook(fis);
+            Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
+
+            // Iterate over the rows and columns
+            StringBuilder content = new StringBuilder();
+            for (Row row : sheet) {
+                for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {
+                    content.append(row.getCell(i).toString()).append("\t");
+                }
+                content.append("\n");
+            }
+
+            // Set the content to the TextView
+            excelContentTextView.setText(content.toString());
+
+            // Close resources
+            workbook.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erreur lors de la lecture du fichier Excel", Toast.LENGTH_SHORT).show();
         }
     }
 }

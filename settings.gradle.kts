@@ -9,6 +9,9 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven ( "https://jitpack.io") // Add this line to resolve dependencies from jitpack.io (for MPAndroidChart, etc.)
+        maven("https://repo.maven.apache.org/maven2")
+
     }
 }
 dependencyResolutionManagement {
@@ -17,10 +20,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://jitpack.io")
-
+    maven("https://repo.maven.apache.org/maven2")
     }
 }
 
 rootProject.name = "AbsentiEssect1"
 include(":app")
- 

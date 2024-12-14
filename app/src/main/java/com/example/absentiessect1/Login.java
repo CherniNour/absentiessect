@@ -19,6 +19,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class Login extends AppCompatActivity {
 
@@ -94,11 +95,12 @@ public class Login extends AppCompatActivity {
                             // Save user data in SharedPreferences
                             saveUserDataToPreferences(name, lastName, role, email, phone);
 
-                            // Redirect based on role
-                            if (role.equalsIgnoreCase("admin")) {
-                                navigateToAdminPage();
-                            } else if (role.equalsIgnoreCase("enseignant")) {
+                            // If the user is a teacher, retrieve and save the FCM token
+                            if (role.equalsIgnoreCase("enseignant")) {
+                                getFCMTokenAndSave(userId);
                                 navigateToTeacherPage();
+                            } else if (role.equalsIgnoreCase("admin")) {
+                                navigateToAdminPage();
                             } else if (role.equalsIgnoreCase("agent")) {
                                 navigateToAgentPage();
                             } else {
@@ -117,6 +119,29 @@ public class Login extends AppCompatActivity {
                 });
     }
 
+    // Retrieve and save the FCM token for the teacher
+    private void getFCMTokenAndSave(String userId) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String token = task.getResult();
+                        Log.d("FCM", "FCM Token: " + token);
+
+                        // Save the token in Firestore under the teacher's document
+                        db.collection("users").document(userId)
+                                .update("fcmToken", token)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d("FCM", "FCM token saved successfully.");
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("FCM", "Error saving FCM token", e);
+                                });
+                    } else {
+                        Log.e("FCM", "Failed to retrieve FCM token", task.getException());
+                    }
+                });
+    }
+
     private void saveUserDataToPreferences(String name, String lastName, String role, String email, String phone) {
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -129,9 +154,6 @@ public class Login extends AppCompatActivity {
 
         editor.apply(); // Save changes
         Log.d("Login", "User data saved to SharedPreferences");
-        String teacherName = sharedPreferences.getString("name", null);
-        Log.d("ListeAbsences", "Retrieved teacher name: " + teacherName);
-
     }
 
     private void navigateToAdminPage() {

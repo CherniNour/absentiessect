@@ -13,8 +13,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Enseignant -->
-
         <!-- Classe -->
         <TextView
             android:id="@+id/text_classe"
@@ -48,6 +46,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salle: 101"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <!-- Enseignant -->
+        <TextView
+            android:id="@+id/text_enseignant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enseignant: John Doe"
             android:textSize="14sp"
             android:textColor="@android:color/black" />
 

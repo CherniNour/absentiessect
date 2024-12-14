@@ -43,4 +43,23 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center" />
 
+    <!-- Bouton pour traiter le fichier -->
+    <EditText
+        android:id="@+id/et_salle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Entrer la salle"
+        android:inputType="text" />
+
+
+    <Button
+        android:id="@+id/btn_traiter_fichier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Traiter le fichier"
+        app:layout_constraintTop_toBottomOf="@id/tv_fichier_chemin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

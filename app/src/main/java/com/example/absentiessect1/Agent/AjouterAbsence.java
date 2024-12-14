@@ -16,6 +16,12 @@ import com.example.absentiessect1.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.Request;
+import org.json.JSONObject;
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,6 +112,9 @@ public class AjouterAbsence extends AppCompatActivity {
                             classeInput.setText("");
                             enseignantAutoComplete.setText(""); // Clear the AutoCompleteTextView
                             salleSpinner.setSelection(0); // Reset spinner selection
+
+                            // After successfully adding the absence, send notification to the teacher
+                            sendNotificationToTeacher(enseignant);
                         })
                         .addOnFailureListener(e -> {
                             // Show error message
@@ -114,6 +123,67 @@ public class AjouterAbsence extends AppCompatActivity {
             }
         });
     }
+
+    private void sendNotificationToTeacher(String enseignantFullName) {
+        // Create a Volley request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        // Set up the URL to send the notification (localhost:3000)
+        String serverUrl = "http://10.0.2.2:3000/send-notification"; // Use '10.0.2.2' for Android Emulator (localhost)
+
+        // Split the enseignant's full name into first and last name
+        String[] nameParts = enseignantFullName.split(" ");
+        if (nameParts.length < 2) {
+            Log.e("sendNotificationToTeacher", "Le nom complet de l'enseignant est invalide: " + enseignantFullName);
+            return;
+        }
+
+        String firstName = nameParts[0];
+        String lastName = nameParts[1];
+
+        // Fetch the teacher's FCM token from Firestore
+        db.collection("users")
+                .whereEqualTo("name", firstName)
+                .whereEqualTo("lastName", lastName)
+                .whereEqualTo("role", "Enseignant")
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        String fcmToken = task.getResult().getDocuments().get(0).getString("fcmToken");
+
+                        if (fcmToken != null) {
+                            try {
+                                // Prepare the notification payload
+                                JSONObject payload = new JSONObject();
+                                payload.put("fcmToken", fcmToken);
+                                payload.put("title", "Nouvelle Absence Ajoutée");
+                                payload.put("body", "Une absence a été ajoutée pour vous.");
+
+                                // Create a POST request with the payload
+                                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl, payload,
+                                        response -> {
+                                            // Handle success
+                                            Log.d("Notification", "Notification envoyée avec succès: " + response);
+                                        },
+                                        error -> {
+                                            // Handle error
+                                            Log.e("Notification", "Erreur lors de l'envoi de la notification: " + error.getMessage());
+                                        });
+
+                                // Add the request to the request queue
+                                requestQueue.add(jsonObjectRequest);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.e("FCM Token", "FCM Token introuvable pour l'enseignant.");
+                        }
+                    } else {
+                        Log.e("Firestore Query", "Enseignant introuvable avec le nom: " + enseignantFullName);
+                    }
+                });
+    }
+
 
     private void loadSalles() {
         // Read salles from salles.txt in raw folder
@@ -138,7 +208,6 @@ public class AjouterAbsence extends AppCompatActivity {
         salleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         salleSpinner.setAdapter(salleAdapter);
     }
-
 
     private void fetchEnseignants() {
         // Fetch users with the role "Enseignant" from Firestore

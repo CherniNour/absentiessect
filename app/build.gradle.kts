@@ -43,13 +43,17 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
     implementation(libs.poi) // For Apache POI
-
+    implementation(libs.poi.ooxml)
     // Add Firebase libraries without specifying versions
     implementation(libs.firebase.auth)
     implementation(libs.firebase.store)
 
+    // l Ajout  la dépendance Firebase Cloud Messaging (FCM)
+    implementation("com.google.firebase:firebase-messaging")
+
     // Add MPAndroidChart dependency
     implementation(libs.mpandroidchart)  // This will now reference the MPAndroidChart library
+    implementation(libs.volley)  // Reference to Volley
 
 
 }
