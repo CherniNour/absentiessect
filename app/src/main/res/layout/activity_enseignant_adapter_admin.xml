@@ -5,6 +5,28 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Admin.EnseignantAdapterAdmin">
+    tools:context=".Admin.EnseignantAdapter">
+
+    <android.widget.ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/absence_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liste des Enseignants"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#6200EE"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_centerInParent="true" />
+    </android.widget.ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

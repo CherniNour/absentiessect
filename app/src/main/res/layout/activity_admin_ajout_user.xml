@@ -3,78 +3,127 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    >
+    android:background="@android:color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- Name -->
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajouter un utilisateur"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
         <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Prénom"
             android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
 
-        <!-- Last Name -->
         <EditText
             android:id="@+id/editTextLastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nom"
             android:inputType="textPersonName"
-            android:padding="10dp" />
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
 
-        <!-- Telephone -->
         <EditText
             android:id="@+id/editTextPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Numéro de télephone"
+            android:hint="Numéro de téléphone"
             android:inputType="phone"
-            android:padding="10dp" />
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
 
-        <!-- Email Address -->
         <EditText
             android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Adresse Mail"
             android:inputType="textEmailAddress"
-            android:padding="10dp" />
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
 
-        <!-- Password -->
         <EditText
             android:id="@+id/editTextPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mot de passe"
             android:inputType="textPassword"
-            android:padding="10dp" />
+            android:background="@android:drawable/edit_text"
+            android:padding="12dp"
+            android:layout_marginTop="8dp" />
 
-        <!-- Role -->
-        <EditText
-            android:id="@+id/editTextRole"
+        <!-- Choix du Role dans un RadioGroup -->
+        <TextView
+            android:id="@+id/roleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rôle"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupRole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Role (e.g., Admin, Enseignant, Agent de suivi)"
-            android:inputType="text"
-            android:padding="10dp" />
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
 
-        <!-- Add User Button -->
+            <RadioButton
+                android:id="@+id/radioButtonEnseignant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Enseignant"
+                android:textColor="@color/black"
+                android:checked="false" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAgent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agent"
+                android:textColor="@color/black" />
+
+            <RadioButton
+                android:id="@+id/radioButtonAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Admin"
+                android:textColor="@color/black" />
+        </RadioGroup>
+
         <Button
             android:id="@+id/buttonAddUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/custom_blue"
-            android:padding="10dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/custom_blue"
             android:text="Ajouter Utilisateur"
             android:textColor="@android:color/white"
-            android:textColorLink="#4586C3" />
+            android:textStyle="bold"
+            android:padding="12dp"
+            android:gravity="center"/>
 
     </LinearLayout>
 </ScrollView>

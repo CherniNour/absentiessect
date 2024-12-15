@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Agent.GestionEmploi">
 
-    <!-- Titre de la page -->
     <TextView
         android:id="@+id/tv_titre_gestion"
         android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center" />
 
-    <!-- Bouton pour importer un fichier Excel -->
     <Button
         android:id="@+id/btn_importer_excel"
         android:layout_width="wrap_content"
@@ -30,7 +28,6 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="40dp" />
 
-    <!-- Bouton pour importer un fichier PDF -->
     <Button
         android:id="@+id/btn_importer_pdf"
         android:layout_width="wrap_content"
@@ -41,7 +38,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_importer_excel" />
 
-    <!-- Spinner for selecting a salle -->
     <Spinner
         android:id="@+id/spinner_salle"
         android:layout_width="wrap_content"
@@ -51,7 +47,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <!-- Button to view the emploi for the selected salle -->
     <Button
         android:id="@+id/btn_view_emploi"
         android:layout_width="wrap_content"

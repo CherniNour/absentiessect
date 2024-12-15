@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Title -->
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -27,7 +26,6 @@
             app:layout_constraintRight_toRightOf="parent"
             android:gravity="center"/>
 
-        <!-- Date -->
         <TextView
             android:id="@+id/date_label"
             android:layout_width="wrap_content"
@@ -51,7 +49,6 @@
             android:padding="10dp"
             android:layout_marginTop="8dp"/>
 
-        <!-- Heure -->
         <TextView
             android:id="@+id/time_label"
             android:layout_width="wrap_content"
@@ -75,7 +72,7 @@
             android:padding="10dp"
             android:layout_marginTop="8dp"/>
 
-        <!-- Enseignant Concerné Spinner -->
+        <!-- Enseignant Concerné dans un Spinner -->
         <TextView
             android:id="@+id/enseignant_label"
             android:layout_width="wrap_content"
@@ -100,7 +97,6 @@
             app:layout_constraintRight_toRightOf="parent"
             android:completionThreshold="1" />
 
-        <!-- Salle -->
         <TextView
             android:id="@+id/salle_label"
             android:layout_width="wrap_content"
@@ -121,7 +117,6 @@
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="8dp"/>
 
-        <!-- Classe -->
         <TextView
             android:id="@+id/classe_label"
             android:layout_width="wrap_content"
@@ -144,7 +139,7 @@
             android:padding="10dp"
             android:layout_marginTop="8dp"/>
 
-        <!-- ID de l'agent -->
+        <!-- ID de l'agent qui sera automatiquement chargé à partir de la session -->
         <TextView
             android:id="@+id/agent_id_label"
             android:layout_width="wrap_content"

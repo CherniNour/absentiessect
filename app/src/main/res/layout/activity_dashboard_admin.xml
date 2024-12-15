@@ -16,7 +16,41 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@id/top_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
 
+        <ImageView
+            android:id="@+id/greeting_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_teacher"
+        android:contentDescription="Greeting Icon"
+        android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:id="@+id/greeting_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/top_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
     <GridLayout
         android:id="@+id/grid_layout"
         android:layout_width="match_parent"
@@ -34,7 +68,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/top_view">
 
-        <!-- Gestion des utilisateurs -->
         <androidx.cardview.widget.CardView
             android:id="@+id/users"
             android:layout_width="130dp"
@@ -68,7 +101,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Notifications -->
         <androidx.cardview.widget.CardView
             android:id="@+id/notifications"
             android:layout_width="130dp"
@@ -101,7 +133,7 @@
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        <!-- Liste des absences -->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/liste_abs"
             android:layout_width="130dp"
@@ -128,14 +160,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Liste Absences"
+                    android:text="Absences"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Liste des réclamations -->
+
         <androidx.cardview.widget.CardView
             android:id="@+id/reclamations"
             android:layout_width="130dp"
@@ -162,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Liste Réclamations"
+                    android:text="Réclamations"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -170,8 +202,6 @@
         </androidx.cardview.widget.CardView>
 
 
-
-        <!-- CardView Dashboard -->
         <androidx.cardview.widget.CardView
             android:id="@+id/dashboard"
             android:layout_width="130dp"
@@ -205,7 +235,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Logout -->
         <androidx.cardview.widget.CardView
             android:id="@+id/card_logout"
             android:layout_width="130dp"
@@ -239,5 +268,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </GridLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

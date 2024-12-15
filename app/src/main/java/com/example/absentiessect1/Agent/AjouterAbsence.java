@@ -129,7 +129,7 @@ public class AjouterAbsence extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         // Set up the URL to send the notification (localhost:3000)
-        String serverUrl = "http://10.0.2.2:3000/send-notification"; // Use '10.0.2.2' for Android Emulator (localhost)
+        String serverUrl = "http://192.168.1.199:3000/send-notification";
 
         // Split the enseignant's full name into first and last name
         String[] nameParts = enseignantFullName.split(" ");

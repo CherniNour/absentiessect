@@ -16,7 +16,6 @@
         android:src="@drawable/absenti_logo"
         android:transitionName="logo_image" />
 
-    <!-- Add margin to lower this layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,15 +67,10 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:text="S'authentifier"
-            android:textColor="#fff" />
-
-        <TextView
-            android:id="@+id/reset"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Forgot password?">
-
-        </TextView>
+            android:textColor="#fff"
+            android:textColorHighlight="#4586C3"
+            android:textColorHint="#4586C3"
+            android:textColorLink="#4586C3" />
 
     </LinearLayout>
 

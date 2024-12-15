@@ -49,14 +49,7 @@
             android:textSize="14sp"
             android:textColor="@android:color/black" />
 
-        <!-- Enseignant -->
-        <TextView
-            android:id="@+id/text_enseignant"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Enseignant: John Doe"
-            android:textSize="14sp"
-            android:textColor="@android:color/black" />
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

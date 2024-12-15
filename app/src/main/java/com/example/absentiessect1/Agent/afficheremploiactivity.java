@@ -3,6 +3,7 @@ package com.example.absentiessect1.Agent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class afficheremploiactivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
-    private TextView excelContentTextView; // TextView to display the content
+    private GridLayout timetableGrid; // GridLayout to display timetable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class afficheremploiactivity extends AppCompatActivity {
         firestore = FirebaseFirestore.getInstance();
 
         // Initialize UI elements
-        excelContentTextView = findViewById(R.id.excelContentTextView);
+        timetableGrid = findViewById(R.id.timetableGrid);
 
         // Get selected salle from intent
         String selectedSalle = getIntent().getStringExtra("SALLE");
@@ -118,17 +119,42 @@ public class afficheremploiactivity extends AppCompatActivity {
             Workbook workbook = new XSSFWorkbook(fis);
             Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 
-            // Iterate over the rows and columns
-            StringBuilder content = new StringBuilder();
-            for (Row row : sheet) {
-                for (int i = 0; i < row.getPhysicalNumberOfCells(); i++) {
-                    content.append(row.getCell(i).toString()).append("\t");
-                }
-                content.append("\n");
+            // Clear the previous content in the GridLayout
+            timetableGrid.removeAllViews();
+
+            // Create a header row for days of the week (this is already done in XML)
+            String[] daysOfWeek = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
+            for (String day : daysOfWeek) {
+                TextView dayTextView = new TextView(this);
+                dayTextView.setText(day);
+                dayTextView.setGravity(android.view.Gravity.CENTER);
+                dayTextView.setPadding(8, 8, 8, 8);
+                dayTextView.setBackgroundColor(getResources().getColor(R.color.orange)); // Use appropriate color
+                timetableGrid.addView(dayTextView);
             }
 
-            // Set the content to the TextView
-            excelContentTextView.setText(content.toString());
+            // Iterate through the rows to display timetable events
+            for (int rowIndex = 1; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
+                Row row = sheet.getRow(rowIndex);
+
+                // Create a TextView for the time slot in the first column
+                String timeSlot = row.getCell(0).toString();
+                TextView timeSlotTextView = new TextView(this);
+                timeSlotTextView.setText(timeSlot);
+                timeSlotTextView.setGravity(android.view.Gravity.CENTER);
+                timeSlotTextView.setPadding(8, 8, 8, 8);
+                timetableGrid.addView(timeSlotTextView);
+
+                // Iterate over the columns to populate the cells with timetable events
+                for (int colIndex = 1; colIndex <= 6; colIndex++) { // There are 6 days of the week
+                    String event = row.getCell(colIndex) != null ? row.getCell(colIndex).toString() : "";
+                    TextView eventTextView = new TextView(this);
+                    eventTextView.setText(event);
+                    eventTextView.setGravity(android.view.Gravity.CENTER);
+                    eventTextView.setPadding(8, 8, 8, 8);
+                    timetableGrid.addView(eventTextView);
+                }
+            }
 
             // Close resources
             workbook.close();
@@ -138,4 +164,5 @@ public class afficheremploiactivity extends AppCompatActivity {
             Toast.makeText(this, "Erreur lors de la lecture du fichier Excel", Toast.LENGTH_SHORT).show();
         }
     }
+
 }

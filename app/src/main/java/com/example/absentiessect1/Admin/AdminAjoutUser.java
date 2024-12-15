@@ -1,10 +1,13 @@
 package com.example.absentiessect1.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.absentiessect1.R;
@@ -19,8 +22,10 @@ import java.util.Map;
 
 public class AdminAjoutUser extends AppCompatActivity {
 
-    private EditText editTextName, editTextLastName, editTextPhone, editTextEmail, editTextPassword, editTextRole;
+    private EditText editTextName, editTextLastName, editTextPhone, editTextEmail, editTextPassword;
+    private RadioGroup radioGroupRole;
     private Button buttonAddUser;
+
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -39,7 +44,7 @@ public class AdminAjoutUser extends AppCompatActivity {
         editTextPhone = findViewById(R.id.editTextPhone);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        editTextRole = findViewById(R.id.editTextRole);
+        radioGroupRole = findViewById(R.id.radioGroupRole);
         buttonAddUser = findViewById(R.id.buttonAddUser);
 
         // Set button listener
@@ -49,9 +54,18 @@ public class AdminAjoutUser extends AppCompatActivity {
             String phone = editTextPhone.getText().toString().trim();
             String email = editTextEmail.getText().toString().trim();
             String password = editTextPassword.getText().toString().trim();
-            String role = editTextRole.getText().toString().trim();
 
-            if (name.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty() || role.isEmpty()) {
+            // Retrieve selected role from RadioGroup
+            int selectedRoleId = radioGroupRole.getCheckedRadioButtonId();
+            if (selectedRoleId == -1) {
+                Toast.makeText(AdminAjoutUser.this, "Please select a role", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            RadioButton selectedRoleButton = findViewById(selectedRoleId);
+            String role = selectedRoleButton.getText().toString().trim();
+
+            // Check for empty fields
+            if (name.isEmpty() || lastName.isEmpty() || phone.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(AdminAjoutUser.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 return;
             }
