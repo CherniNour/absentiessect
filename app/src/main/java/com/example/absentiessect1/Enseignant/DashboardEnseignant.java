@@ -43,10 +43,10 @@ public class DashboardEnseignant extends AppCompatActivity {
             startActivity(intent);
         });
 
-        /*cardNotifications.setOnClickListener(v -> {
-            Intent intent = new Intent(DashboardEnseignant.this, NotificationsEnseignant.class);
+        cardNotifications.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardEnseignant.this, NotificationsActivity.class);
             startActivity(intent);
-        });*/
+        });
 
         cardAddReclamation.setOnClickListener(v -> {
             Intent intent = new Intent(DashboardEnseignant.this, ReclamationEnseignant.class);

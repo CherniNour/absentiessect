@@ -12,56 +12,51 @@ import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
-    private List<Notification> notificationList;
+    private List<Notification> notifications;
+    private OnNotificationClickListener listener;
 
-    public NotificationAdapter(List<Notification> notificationList) {
-        this.notificationList = notificationList;
+    public interface OnNotificationClickListener {
+        void onNotificationClick(Notification notification);
+    }
+
+    public NotificationAdapter(List<Notification> notifications, OnNotificationClickListener listener) {
+        this.notifications = notifications;
+        this.listener = listener;
     }
 
     @Override
     public NotificationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_notification, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notification, parent, false);
         return new NotificationViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(NotificationViewHolder holder, int position) {
-        Notification notification = notificationList.get(position);
-        holder.titleTextView.setText(notification.getTitle());
-        holder.messageTextView.setText(notification.getMessage());
-        holder.dateTextView.setText(notification.getDate());
+        Notification notification = notifications.get(position);
+        holder.notificationMessage.setText(notification.getMessage());
 
-        // Afficher l'état de la notification (Lue ou Non lue)
-        if (notification.isRead()) {
-            holder.statusTextView.setText("Lue");
-            holder.statusTextView.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.darker_gray));
-        } else {
-            holder.statusTextView.setText("Non lue");
-            holder.statusTextView.setTextColor(holder.itemView.getContext().getResources().getColor(android.R.color.holo_red_dark));
-        }
+        // Set the status to "Lue" if read, "Non Lue" otherwise
+        holder.notificationStatus.setText(notification.isRead() ? "Lue" : "Non Lue");
 
-        // Mark as read when clicked
-        holder.itemView.setOnClickListener(v -> {
-            notification.setRead(true);  // Marquer comme lue
-            notifyItemChanged(position); // Notifier que l'élément a changé
-        });
+        // Set click listener to mark as read
+        holder.itemView.setOnClickListener(v -> listener.onNotificationClick(notification));
     }
 
     @Override
     public int getItemCount() {
-        return notificationList.size();
+        return notifications.size();
     }
 
     public static class NotificationViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleTextView, messageTextView, dateTextView, statusTextView;
 
-        public NotificationViewHolder(View view) {
-            super(view);
-            titleTextView = view.findViewById(R.id.notificationTitle);
-            messageTextView = view.findViewById(R.id.notificationMessage);
-            dateTextView = view.findViewById(R.id.notificationDate);
-            statusTextView = view.findViewById(R.id.notificationStatus);  // Référence du TextView pour le statut
+        TextView notificationMessage;
+
+        TextView notificationStatus;
+
+        public NotificationViewHolder(View itemView) {
+            super(itemView);
+            notificationMessage = itemView.findViewById(R.id.notificationMessage);
+            notificationStatus = itemView.findViewById(R.id.notificationStatus);
         }
     }
 }

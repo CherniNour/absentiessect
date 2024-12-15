@@ -80,7 +80,7 @@ public class Statistics extends AppCompatActivity {
                 dataSet.setColors(new int[]{R.color.green, R.color.red, R.color.yellow}, this);
                 PieData pieData = new PieData(dataSet);
                 claimsPieChart.setData(pieData);
-                claimsPieChart.invalidate(); // Rafraîchir le graphique
+                claimsPieChart.invalidate();
             }
         });
     }

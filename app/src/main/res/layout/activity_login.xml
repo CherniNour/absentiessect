@@ -14,7 +14,8 @@
         android:layout_width="382dp"
         android:layout_height="150dp"
         android:src="@drawable/absenti_logo"
-        android:transitionName="logo_image" />
+        android:transitionName="logo_image"
+        android:layout_gravity="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +35,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Username">
+            android:hint="Email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/editTextUsername"
@@ -49,7 +50,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="Mot de passe"
             app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText

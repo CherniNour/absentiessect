@@ -43,7 +43,7 @@ public class ReclamationAdapter extends RecyclerView.Adapter<ReclamationAdapter.
         holder.subjectText.setText(reclamation.getSubject());
         holder.messageText.setText(reclamation.getMessage());
 
-        // Get the teacher's name based on the enseignantId
+        // Get the teacher's name based on the enseignantId from the firebase
         String enseignantId = reclamation.getEnseignantId();
 
         // Fetch the teacher's name from Firestore
@@ -85,12 +85,10 @@ public class ReclamationAdapter extends RecyclerView.Adapter<ReclamationAdapter.
 
         // Reject button click handler
         holder.rejectButton.setOnClickListener(v -> {
-            // Update Firestore to "Rejettée"
             db.collection("reclamations").document(reclamation.getId())
-                    .update("etat", "rejettée")
+                    .update("etat", "rejetée")
                     .addOnSuccessListener(aVoid -> {
-                        // Update UI status instantly
-                        reclamation.setEtat("rejettée");
+                        reclamation.setEtat("rejetée");
                         notifyItemChanged(position);
                     });
         });

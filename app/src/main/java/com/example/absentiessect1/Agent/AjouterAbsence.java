@@ -113,6 +113,24 @@ public class AjouterAbsence extends AppCompatActivity {
                             enseignantAutoComplete.setText(""); // Clear the AutoCompleteTextView
                             salleSpinner.setSelection(0); // Reset spinner selection
 
+                            // Formulate the notification message
+                            String notificationMessage = enseignant + " s'est absenté le " + date + " à " + time + " à la  " + salle + " pour la classe " + classe;
+
+                            // Add the notification to Firestore under the 'Notifications' collection
+                            Map<String, Object> notification = new HashMap<>();
+                            notification.put("message", notificationMessage);
+                            notification.put("timestamp", System.currentTimeMillis()); // Store the timestamp
+
+                            // Add notification to the Firebase 'Notification' collection
+                            db.collection("Notification")
+                                    .add(notification)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d("AjouterAbsence", "Notification added to Firestore");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e("AjouterAbsence", "Error adding notification: " + e.getMessage());
+                                    });
+
                             // After successfully adding the absence, send notification to the teacher
                             sendNotificationToTeacher(enseignant);
                         })
@@ -128,8 +146,8 @@ public class AjouterAbsence extends AppCompatActivity {
         // Create a Volley request queue
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
-        // Set up the URL to send the notification (localhost:3000)
-        String serverUrl = "http://192.168.1.199:3000/send-notification";
+        // Set up the URL to send the notification
+        String serverUrl = "http://192.168.1.136:3000/send-notification";
 
         // Split the enseignant's full name into first and last name
         String[] nameParts = enseignantFullName.split(" ");
@@ -163,11 +181,25 @@ public class AjouterAbsence extends AppCompatActivity {
                                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, serverUrl, payload,
                                         response -> {
                                             // Handle success
-                                            Log.d("Notification", "Notification envoyée avec succès: " + response);
+                                            try {
+                                                boolean success = response.getBoolean("success");
+                                                if (success) {
+                                                    Log.d("Notification", "Notification envoyée avec succès: " + response);
+                                                } else {
+                                                    Log.e("Notification", "Erreur lors de l'envoi de la notification: " + response.getString("error"));
+                                                }
+                                            } catch (JSONException e) {
+                                                Log.e("Notification", "Erreur lors du traitement de la réponse: " + e.getMessage());
+                                            }
                                         },
                                         error -> {
                                             // Handle error
-                                            Log.e("Notification", "Erreur lors de l'envoi de la notification: " + error.getMessage());
+                                            if (error.networkResponse != null && error.networkResponse.data != null) {
+                                                String errorResponse = new String(error.networkResponse.data);
+                                                Log.e("Notification", "Erreur serveur: " + errorResponse);
+                                            } else {
+                                                Log.e("Notification", "Erreur réseau: " + error.getMessage());
+                                            }
                                         });
 
                                 // Add the request to the request queue
@@ -183,6 +215,7 @@ public class AjouterAbsence extends AppCompatActivity {
                     }
                 });
     }
+
 
 
     private void loadSalles() {

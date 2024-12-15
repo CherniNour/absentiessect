@@ -47,7 +47,7 @@ public class ListeAbsencesEnseignant extends AppCompatActivity {
         String lastName = sharedPreferences.getString("lastName", null);
 
         if (name != null && lastName != null) {
-            String teacherFullName = lastName + " " + name; // Concatenate first and last name
+            String teacherFullName = name + " " + lastName; // Concatenate first and last name
 
             // Load absences for the teacher
             loadAbsencesForTeacher(teacherFullName);

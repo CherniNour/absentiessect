@@ -3,7 +3,8 @@ package com.example.absentiessect1.Agent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
-import android.widget.GridLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +27,7 @@ import java.io.IOException;
 public class afficheremploiactivity extends AppCompatActivity {
 
     private FirebaseFirestore firestore;
-    private GridLayout timetableGrid; // GridLayout to display timetable
+    private TableLayout tableLayout; // Reference to TableLayout from XML
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,8 @@ public class afficheremploiactivity extends AppCompatActivity {
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance();
 
-        // Initialize UI elements
-        timetableGrid = findViewById(R.id.timetableGrid);
+        // Find TableLayout from XML
+        tableLayout = findViewById(R.id.tableLayout);
 
         // Get selected salle from intent
         String selectedSalle = getIntent().getStringExtra("SALLE");
@@ -119,50 +120,39 @@ public class afficheremploiactivity extends AppCompatActivity {
             Workbook workbook = new XSSFWorkbook(fis);
             Sheet sheet = workbook.getSheetAt(0); // Get the first sheet
 
-            // Clear the previous content in the GridLayout
-            timetableGrid.removeAllViews();
-
-            // Create a header row for days of the week (this is already done in XML)
-            String[] daysOfWeek = {"Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"};
-            for (String day : daysOfWeek) {
-                TextView dayTextView = new TextView(this);
-                dayTextView.setText(day);
-                dayTextView.setGravity(android.view.Gravity.CENTER);
-                dayTextView.setPadding(8, 8, 8, 8);
-                dayTextView.setBackgroundColor(getResources().getColor(R.color.orange)); // Use appropriate color
-                timetableGrid.addView(dayTextView);
-            }
+            // Clear the previous content in the TableLayout
+            tableLayout.removeAllViews();
 
             // Iterate through the rows to display timetable events
-            for (int rowIndex = 1; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
+            for (int rowIndex = 0; rowIndex < sheet.getPhysicalNumberOfRows(); rowIndex++) {
                 Row row = sheet.getRow(rowIndex);
 
-                // Create a TextView for the time slot in the first column
-                String timeSlot = row.getCell(0).toString();
-                TextView timeSlotTextView = new TextView(this);
-                timeSlotTextView.setText(timeSlot);
-                timeSlotTextView.setGravity(android.view.Gravity.CENTER);
-                timeSlotTextView.setPadding(8, 8, 8, 8);
-                timetableGrid.addView(timeSlotTextView);
+                // Create a new TableRow
+                TableRow tableRow = new TableRow(this);
 
-                // Iterate over the columns to populate the cells with timetable events
-                for (int colIndex = 1; colIndex <= 6; colIndex++) { // There are 6 days of the week
-                    String event = row.getCell(colIndex) != null ? row.getCell(colIndex).toString() : "";
-                    TextView eventTextView = new TextView(this);
-                    eventTextView.setText(event);
-                    eventTextView.setGravity(android.view.Gravity.CENTER);
-                    eventTextView.setPadding(8, 8, 8, 8);
-                    timetableGrid.addView(eventTextView);
+                // Iterate over the columns to populate the cells
+                for (int colIndex = 0; colIndex < row.getPhysicalNumberOfCells(); colIndex++) {
+                    String cellValue = row.getCell(colIndex) != null ? row.getCell(colIndex).toString() : "";
+
+                    // Create a TextView for each cell
+                    TextView cellTextView = new TextView(this);
+                    cellTextView.setText(cellValue);
+                    cellTextView.setGravity(android.view.Gravity.CENTER);
+                    cellTextView.setPadding(8, 8, 8, 8);
+                    cellTextView.setBackgroundColor(getResources().getColor(R.color.cellBackground)); // Customize as needed
+
+                    // Add the TextView to the TableRow
+                    tableRow.addView(cellTextView);
                 }
+
+                // Add the TableRow to the TableLayout
+                tableLayout.addView(tableRow);
             }
 
-            // Close resources
-            workbook.close();
             fis.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, "Erreur lors de la lecture du fichier Excel", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

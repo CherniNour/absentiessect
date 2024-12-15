@@ -37,7 +37,7 @@ public class ListeReclamationsAdmin extends AppCompatActivity {
     private void fetchReclamations() {
         // Fetch all reclamations (including those with 'approuvée' or 'rejettée' statuses)
         db.collection("reclamations")
-                .get()  // No filter, fetch all reclamations
+                .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -49,8 +49,6 @@ public class ListeReclamationsAdmin extends AppCompatActivity {
                         // Set the adapter
                         reclamationAdapter = new ReclamationAdapter(ListeReclamationsAdmin.this, reclamationList);
                         recyclerView.setAdapter(reclamationAdapter);
-                    } else {
-                        // Handle failure
                     }
                 });
     }

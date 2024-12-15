@@ -56,7 +56,7 @@
         android:id="@+id/btn_traiter_fichier"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Traiter le fichier"
+        android:text="Enregistrer le fichier"
         app:layout_constraintTop_toBottomOf="@id/tv_fichier_chemin"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
